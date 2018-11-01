@@ -1,0 +1,9 @@
+version: '3'
+services:
+  cli:
+    image: ditsara/codewars-pw:development
+    build:
+      context: .
+    volumes:
+     - .:/go/src/github.com/ditsara/codewars-pw:cached
+    working_dir: /go/src/github.com/ditsara/codewars-pw
