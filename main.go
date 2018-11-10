@@ -1,30 +1,32 @@
 /*
- * USAGE: ./codewars <password>
- *
- * curl localhost:8080/<password>         // CORRECT
- * curl localhost:8080/<not-the-password> // WRONG
- *
- */
+* USAGE: ./codewars <password>
+*
+* curl localhost:8080/<password>         // CORRECT
+* curl localhost:8080/<not-the-password> // WRONG
+*
+*/
 
 package main
 
 import (
   "os"
   "fmt"
-  "log"
+  // "log"
   "net/http"
+  "github.com/labstack/echo"
 )
 
-func handler(w http.ResponseWriter, r *http.Request) {
-  if r.URL.Path[1:] == os.Args[1] {
-    fmt.Fprintf(w, "CORRECT\n")
+func handler(c echo.Context) error {
+  fmt.Println(c.Param("username"));
+  if c.Param("guess") == os.Args[1] {
+    return c.String(http.StatusOK, "CORRECT\n")
   } else {
-    fmt.Fprintf(w, "WRONG\n")
+    return c.String(http.StatusOK, "WRONG\n")
   }
 }
 
 func main() {
-  fmt.Println("starting server...")
-  http.HandleFunc("/", handler)
-  log.Fatal(http.ListenAndServe(":8080", nil))
+  e := echo.New()
+  e.GET("/:username/:guess", handler)
+  e.Logger.Fatal(e.Start(":8080"))
 }
