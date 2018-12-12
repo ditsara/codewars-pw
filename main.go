@@ -46,5 +46,6 @@ func storeLog(msg string) {
 func main() {
   e := echo.New()
   e.GET("/:username/:guess", handler)
+  e.HEAD("/:username/:guess", handler)
   e.Logger.Fatal(e.Start(":8080"))
 }
