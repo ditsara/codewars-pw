@@ -22,7 +22,7 @@ func handler(c echo.Context) error {
     storeLog(c.Param("username"));
     return c.String(http.StatusOK, "CORRECT\n")
   } else {
-    return c.String(http.StatusOK, "WRONG\n")
+    return c.String(http.StatusUnauthorized, "WRONG\n")
   }
 }
 
